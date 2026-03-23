@@ -13,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -26,7 +27,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SongAppWithObjectsTheme {
-                var playList = remember { mutableListOf<Song>()}
+                val playList = remember { mutableListOf<Song>()}
                 var a = Song("Bad Penny", "Rory Gallagher", 1977)
                 var b = Song("Exit Song", "RadioShed ", 1997)
                 var c = Song("Enter Song", "XKY ", 1991)
@@ -56,8 +57,12 @@ fun displayPlayList(songs: List<Song>) {
         }
         items(songs) { song ->
             Row {
-                Text(song.playSong())
-                Button(onClick = {}) { Text("Play") }
+
+                Text(song.Title+ " by " +song.Artist)
+                Button(onClick = {
+
+
+                }) { Text("Play") }
             }
             HorizontalDivider()
 
