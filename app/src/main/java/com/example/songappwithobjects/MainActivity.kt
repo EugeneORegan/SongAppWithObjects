@@ -54,6 +54,7 @@ fun displayPlayList(songs: List<Song>) {
         item {
             Spacer(Modifier.size(75.dp))
             Text("Play List")
+
         }
         items(songs) { song ->
             Row {
