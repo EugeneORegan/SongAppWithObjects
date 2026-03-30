@@ -15,7 +15,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -24,13 +23,14 @@ import com.example.songappwithobjects.entities.Song
 import com.example.songappwithobjects.ui.theme.SongAppWithObjectsTheme
 
 class MainActivity : ComponentActivity() {
-
+   
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             SongAppWithObjectsTheme {
-                val playList = remember { mutableListOf<Song>()} //1. List created and set up for refreshes
+                var playList =
+                    remember { mutableListOf<Song>() } //1. List created and set up for refreshes
 
                 //2. Five Song objects created for the list
                 var a = Song("Bad Penny", "Rory Gallagher", 1977)
@@ -46,55 +46,67 @@ class MainActivity : ComponentActivity() {
                 playList.add(d)
                 playList.add(e)
 
-
-               //4. Jumps to the composable to display the playlist
-                displayPlayList(playList)
-
+                //4. Jumps to the composable to display the playlist
+                DisplayPlayList(playList)
             }
         }
     }
-}
 
-@Composable
-fun displayPlayList(songs: List<Song>) {
+    @Composable
+    fun DisplayPlayList(songs: List<Song>) {
 
-    LazyColumn() {
-        item{
-            Spacer(Modifier.size(75.dp))
-            NeursosisPic()
-        }
-        item {
+        LazyColumn() {
 
-            Text("Play List")
-
-        }
-        items(songs) { song ->
-            Row {
-
-                Text(song.Title+ " by " +song.Artist)
-                Button(onClick = {
-
-
-                }) { Text("Play") }
+            item {
+                Spacer(Modifier.size(75.dp))
+                NeursosisPic()
             }
-            HorizontalDivider()
+            item {
 
+                Text("Play List")
+
+            }
+            items(songs) { song ->
+                Row {
+
+                    Text(song.Title + " by " + song.Artist)
+                    Button(onClick = {
+
+
+                    }) { Text("Link ...") }
+                }
+                HorizontalDivider()
+
+            }
+            item {
+                Albumcover()
+            }
         }
 
     }
+    }
 
+    @Composable
+    private fun Albumcover() {
 
-}
+        Image(
+            painter = painterResource(id = R.drawable.albumcover),
+            contentDescription = "Album Cover",
+            modifier = Modifier.fillMaxWidth()
 
-/**
- * https://www.jetpackcompose.net/image-in-jetpack-compose
- */
-@Composable
-private fun NeursosisPic() {
-    Image(
-        painter = painterResource(id = R.drawable.neurosis),
-        contentDescription = "Neurosis Band",
-        modifier = Modifier.fillMaxWidth()
+        )
 
-    )
-}
+    }
+
+    /**
+     * https://www.jetpackcompose.net/image-in-jetpack-compose
+     */
+    @Composable
+    private fun NeursosisPic() {
+        Image(
+            painter = painterResource(id = R.drawable.neurosis),
+            contentDescription = "Neurosis Band",
+            modifier = Modifier.fillMaxWidth()
+
+        )
+    }
